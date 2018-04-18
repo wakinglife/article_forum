@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
 
-  
+
 
      root "posts#index"
 
@@ -46,7 +46,7 @@ Rails.application.routes.draw do
        resources :posts, only: [:index, :destroy]
        resources :categories, only: [:index, :create, :show, :edit, :update, :destroy]
        resources :users, only: [:index]
-       root "posts#index"
+       root "categories#index"
      end
 
 end
