@@ -1,0 +1,62 @@
+<div class="container">
+  <div class="row">
+
+    <ul class="nav nav-tabs">
+       <li role="presentation" class="active">
+        <%= link_to 'Category List', admin_categories_path %>
+      </li>
+       <li role="presentation" >
+        <%= link_to 'User List', admin_users_path %>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<br>
+  <h1>分類總表</h1>
+
+  <br>
+
+  <div class="form-inline" >
+  <%= form_for [:admin, @category] do |f| %>
+    <div class="form-group">
+      <%= f.text_field :name, placeholder: "Category Name",  class: "form-control" %>
+    </div>
+    <%= f.submit class: "btn btn-info" %>
+
+    <% if @category.errors.any? %>
+      <%= @category.errors.full_messages.to_sentence %>
+    <% end %>
+  <% end %>
+  </div>
+  <br>
+
+  <div class="row">
+
+    <div class="col-md-12">
+
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Category Name</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @categories.each do |category| %>
+          <tr>
+            <th scope="row"><%= category.id %></th>
+            <td><%= category.name %></td>
+            <td><%= link_to '<span class="glyphicon glyphicon-edit"</span>'.html_safe, admin_categories_path(id: category.id), class: "btn btn-default" %></td>
+            <td><%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, admin_category_path(category),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-default" %></td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+    </div>
+
+  </div>
+</div>
