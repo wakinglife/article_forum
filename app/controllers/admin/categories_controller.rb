@@ -9,5 +9,5 @@ class Admin::CategoriesController < Admin::BaseController
     else
       @category = Category.new
     end
- end
+  end
 end

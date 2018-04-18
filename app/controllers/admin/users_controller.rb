@@ -5,4 +5,15 @@ class Admin::UsersController < Admin::BaseController
     @users = User.all
   end
 
+
+  private
+
+     def set_user
+        @user = User.find(params[:id])
+      end
+
+     def user_params
+       params.require(:user).permit(:name, :intro, :avatar)
+     end
+
 end
