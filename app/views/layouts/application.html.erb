@@ -30,7 +30,7 @@
                 <ul class="pull-right text-right nav navbar-nav">
                   <% if current_user %>
                   <% if current_user.admin? %>
-                 <li><%= link_to 'Admin後台', admin_restaurants_path %></li>
+                 <li><%= link_to 'Admin後台', admin_posts_path %></li>
                  <% end %>
                   <li><p class="navbar-text">Hi, <%= current_user.email %></p></li>
                   <li><%= link_to 'Profile', user_path(current_user) %></li>
