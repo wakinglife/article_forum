@@ -32,7 +32,7 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 gem 'ffaker'
 gem 'carrierwave'
-# gem 'kaminari'
+gem 'kaminari'
 # gem 'bootstrap-sass', '~> 3.3.7'
 # gem 'jquery-rails'
 # Use Capistrano for deployment

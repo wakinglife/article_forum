@@ -2,12 +2,8 @@ class Admin::CategoriesController < Admin::BaseController
 
 
   def index
-    @categories = Category.all
+    @categories = Category.page(params[:page]).per(15)
+    @category = Category.new
 
-    if params[:id]
-      set_category
-    else
-      @category = Category.new
-    end
   end
 end
