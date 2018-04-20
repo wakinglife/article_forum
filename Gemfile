@@ -33,8 +33,8 @@ gem 'devise'
 gem 'ffaker'
 gem 'carrierwave'
 gem 'kaminari'
-# gem 'bootstrap-sass', '~> 3.3.7'
-# gem 'jquery-rails'
+gem 'bootstrap-sass', '~> 3.3.7'
+gem 'jquery-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

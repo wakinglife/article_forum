@@ -1,5 +1,12 @@
 {
   "name": "dojo_forum",
   "private": true,
-  "dependencies": {}
+  "dependencies": {
+    "bootstrap": "^4.1.0",
+    "jquery": "^3.3.1"
+  },
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "fion chen <wakinglife_615@yahoo.com>",
+  "license": "MIT"
 }
