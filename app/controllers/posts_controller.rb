@@ -1,7 +1,6 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!
-  before_action :authenticate_admin
   
+
   def index
     # @users = User.order(created_at: :desc).limit(10)
     @posts = Post.all
@@ -13,7 +12,7 @@ class PostsController < ApplicationController
 
 
   def create
-
+    @posts = Post.new
     @post = current_user.posts.build(post_params)
        if @post.save
          flash[:notice] = 'post was successfully created'
