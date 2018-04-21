@@ -1,0 +1,32 @@
+<div class="container">
+  <div class="row">
+         <div class="col-md-12">
+           <div class="page-header">
+             <h1>Profile</h1>
+           </div>
+         </div>
+
+     <ul>
+
+      <% @users.each do |user| %>
+        <div class="col-md-3 col-sm-4 col-xs-6 text-center user-item">
+
+          <%= link_to user_path(user) do %>
+          <% if user.avatar? %>
+            <%= image_tag user.avatar, class: "img-rounded", size: "50" %>
+          <% else %>
+            <%= image_tag "http://via.placeholder.com/120x120", class: "img-responsive center-block img-rounded"  %>
+          <% end %>
+
+           <!-- <%= image_tag(user.avatar, class: "img-responsive") %> -->
+            <h4><%= user.name %></h4>
+         <% end %>
+
+
+
+         </div>
+      <% end %>
+
+     </ul>
+ </div>
+</div>
