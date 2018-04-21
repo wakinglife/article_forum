@@ -1,14 +1,14 @@
 Rails.application.routes.draw do
 
-  devise_for :users
+  devise_for :users, :controllers => { registrations: "users/registrations" }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-
+  # devise_for :users
 
 
 
      root "posts#index"
 
-     resources :psots, only: [:index, :create, :show, :edit, :update, :destroy] do
+     resources :posts, only: [:index, :create, :show, :edit, :update, :destroy] do
        resources :comments, only: [:index, :create, :edit, :update, :destroy]
        member do
          post :like

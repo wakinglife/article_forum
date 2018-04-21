@@ -15,5 +15,5 @@
  */
   @import "bootstrap-sprockets";
   @import "bootstrap";
-  /* @import "bootstrap/theme";
-  @import "style"; */
+  @import "bootstrap/theme";
+  @import "style";
