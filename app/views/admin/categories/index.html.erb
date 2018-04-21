@@ -5,6 +5,7 @@
        <li role="presentation" class="active">
         <%= link_to 'Category List', admin_categories_path %>
       </li>
+      <br>
        <li role="presentation" >
         <%= link_to 'User List', admin_users_path %>
       </li>
@@ -13,7 +14,10 @@
 </div>
 
 <br>
-  <h1>分類總表</h1>
+<div class="container">
+  <div class="row">
+
+  <div><h1>分類總表</h1></div>
 
   <br>
 
@@ -22,6 +26,7 @@
     <div class="form-group">
       <%= f.text_field :name, placeholder: "Category Name",  class: "form-control" %>
     </div>
+    <br>
     <%= f.submit class: "btn btn-info" %>
 
     <% if @category.errors.any? %>
@@ -31,7 +36,6 @@
   </div>
   <br>
 
-  <div class="row">
 
     <div class="col-md-12">
 
@@ -57,6 +61,6 @@
       </table>
      <%= paginate @categories %>
     </div>
-
+   </div>
   </div>
 </div>
