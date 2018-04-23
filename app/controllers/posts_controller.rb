@@ -50,15 +50,15 @@ before_action :set_post, only:  [:show, :edit, :update, :destroy]
     end
   end
 
-  private
+private
 
-def set_post
-  @post = Post.find(params[:id])
-end
+  def set_post
+    @post = Post.find(params[:id])
+  end
 
 
-def post_params
-  params.require(:post).permit(:content)
-end
+  def post_params
+    params.require(:post).permit(:content)
+  end
 
 end
