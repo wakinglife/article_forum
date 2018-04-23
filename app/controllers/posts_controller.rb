@@ -3,9 +3,9 @@ class PostsController < ApplicationController
 
   def index
     # @users = User.order(created_at: :desc).limit(10)
-    @posts = Post.all
+
     # @posts = Post.new
-    # @posts = Post.page(params[:page]).per(20).order(created_at: :desc)
+    @posts = Post.page(params[:page]).per(10).order(created_at: :desc)
 
   end
 
@@ -41,7 +41,7 @@ class PostsController < ApplicationController
     end
   end
 
-  
+
   private
 
 def set_post

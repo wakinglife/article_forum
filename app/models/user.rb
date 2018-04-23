@@ -10,6 +10,7 @@ class User < ApplicationRecord
   validates :name, uniqueness: true
 
   has_many :posts, dependent: :restrict_with_error
+  
 
   def admin?
     self.role == "admin"

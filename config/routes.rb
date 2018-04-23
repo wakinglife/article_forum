@@ -8,7 +8,7 @@ Rails.application.routes.draw do
 
      root "posts#index"
 
-     resources :posts, only: [:index, :create, :show, :edit, :update, :destroy] do
+     resources :posts do
        resources :comments, only: [:index, :create, :edit, :update, :destroy]
        member do
          post :like
@@ -23,9 +23,7 @@ Rails.application.routes.draw do
 
       resources :users, only: [:index, :show, :edit, :update, :destroy] do
         member do
-
           get :friend_list
-
         end
       end
 
@@ -33,7 +31,6 @@ Rails.application.routes.draw do
         member do
           post :confirm
           delete :reject
-
         end
      end
 
@@ -44,7 +41,7 @@ Rails.application.routes.draw do
 
      namespace :admin do
 
-       resources :categories, only: [:index, :create, :show, :edit, :update, :destroy]
+       resources :categories
        resources :users, only: [:index] do
          collection do
            put :toggle_admin
