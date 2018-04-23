@@ -19,7 +19,7 @@ before_action :set_post, only:  [:show, :edit, :update, :destroy]
          redirect_to posts_path
        else
          flash[:alert] = @post.errors.full_messages.to_sentence
-         @posts = Post.page(params[:page]).per(20).order(created_at: :desc)
+         @posts = Post.page(params[:page]).per(10).order(created_at: :desc)
          render :index
        end
   end

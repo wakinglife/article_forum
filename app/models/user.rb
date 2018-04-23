@@ -6,11 +6,16 @@ class User < ApplicationRecord
 
   mount_uploader :avatar, AvatarUploader
 
-  validates_presence_of :name, length: { maximum: 20 }
-  validates :name, uniqueness: true
-
-  has_many :posts, dependent: :restrict_with_error
+  validates_presence_of :name, :email
   
+  has_many :posts, dependent: :restrict_with_error
+
+  has_many :comments, dependent: :restrict_with_error
+
+
+  has_many :likes, dependent: :destroy
+  has_many :liked_posts, through: :likes, source: :post
+
 
   def admin?
     self.role == "admin"
@@ -19,4 +24,6 @@ class User < ApplicationRecord
   def toggle_admin!
     self.admin = !self.admin
   end
+
+
 end
