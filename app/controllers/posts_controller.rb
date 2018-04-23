@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  
+
 
   def index
     # @users = User.order(created_at: :desc).limit(10)
@@ -24,6 +24,24 @@ class PostsController < ApplicationController
        end
   end
 
+
+  def edit
+     unless @user == current_user
+       redirect_to posts_user_path(@user)
+     end
+  end
+
+  def update
+
+    if @post.update(post_params)
+      flash[:notice] = "post was updated"
+      redirect_to posts_user_path(@user)
+    else
+      render :action => :edit
+    end
+  end
+
+  
   private
 
 def set_post
