@@ -26,6 +26,7 @@ before_action :set_post, only:  [:show, :edit, :update, :destroy]
   def show
     @post = Post.find(params[:id])
     @comment = Comment.new(comment: params[:comment])
+    # @comment = Comment.page(params[:page]).per(20).order(created_at: :desc)
   end
 
   def edit
@@ -54,11 +55,11 @@ before_action :set_post, only:  [:show, :edit, :update, :destroy]
   end
 
   def feeds
-      # @users = User.count
-      # @posts = Post.count
-      # @comments = Comment.count
-      # @users = User.order(comments_count: :desc).limit(10)
-      # @posts = Post.order(comments_count: :desc).limit(10)
+      @users = User.size
+      @posts = Post.size
+      @comments = Comment.size
+      @users = User.order(comments_count: :desc).limit(10)
+      @posts = Post.order(comments_count: :desc).limit(10)
 
   end
 

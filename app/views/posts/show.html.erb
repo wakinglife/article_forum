@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h2><%= @post.title %></h2>
+      <p><%= @post.content %></p>
+      <%= image_tag @post.image, class: "img-responsive center-block" %>
+
+    </div>
+
+    <div class="col-md-4">
+
+   <P><%= @post.user.name%></P>
+   <%= image_tag @post.user.avatar, class: "img-responsive center-block" %>
+
+
+    </div>
+
+    <div class="clearfix"></div>
+
+    <hr>
+
+  </div>
+
+<div class="container">
+  <div class="row">
+   <%= form_for [@post, @comment] do |f| %>
+    <div class="form-group">
+      <%= f.text_area :comment, placeholder: "請留下評論", class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.submit class: "btn btn-primary" %>
+      <%= f.button "Cancel", type: :reset, class: "btn btn-default" %>
+    </div>
+  <% end %>
+  </div>
+</div>
+<% @post.comments.each do |comment| %>
+    <div>
+      <h4><%= comment.user.name %></h4>
+      <p><%= simple_format comment.content %></p>
+      <p class="text-muted">
+        <em><%= time_ago_in_words(comment.created_at) %> </em>
+
+      </p>
+
+        <%= link_to '<span class="glyphicon glyphicon-edit"</span>'.html_safe, edit_post_comment_path(@post, comment), class: "btn btn-info" %>
+        <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_comment_path(@post, comment),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-info" %>
+    </div>
+    <hr>
+    <% end %>
+</div>

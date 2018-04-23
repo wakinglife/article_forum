@@ -16,6 +16,7 @@
           <th>Last commented at ▽</th>
           <th>Viewed count ▽</th>
 
+
         </tr>
       </thead>
     <tbody>
@@ -23,9 +24,10 @@
           <% @posts.each do |post| %>
           <tr>
             <th scope="row"><%#= post.comments.count %></th>
-            <td><%= post.title %> <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_path(post),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-default" %> </td>
+            <td><%=  link_to post.title, post_path(post)%> | <%= link_to "Delete", post_path(post), method: :delete %> <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_path(post),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-default" %></td>
             <td><%#= post.comments.last.created_at %></td>
             <td><%#= post.views.count %></td>
+
           </tr>
           <% end %>
         </tbody>

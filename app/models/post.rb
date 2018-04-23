@@ -1,5 +1,5 @@
 class Post < ApplicationRecord
-  # mount_uploader :image, PhotoUploader
+  mount_uploader :image, PhotoUploader
   validates_presence_of :content
 
   belongs_to :user, counter_cache: true
