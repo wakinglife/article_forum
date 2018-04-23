@@ -1,18 +1,24 @@
 <h1>front</h1>
 <div class="container">
   <div class="row">
+    <ul class="nav nav-pills nav-pills-center">
+      <li role="presentation" class="active"><%= link_to "All Category", root_path %></li>
+      <% @categories.each do |category| %>
+        <li role="presentation"><%= link_to category.name, category_path(category) %></li>
+      <% end %>
+    </ul>
 
     <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th>Comments count ▽</th>
-            <th>Post title</th>
-            <th>Last commented at ▽</th>
-            <th>Viewed count ▽</th>
+      <thead>
+        <tr>
+          <th>Comments count ▽</th>
+          <th>Post title</th>
+          <th>Last commented at ▽</th>
+          <th>Viewed count ▽</th>
 
-          </tr>
-        </thead>
-        <tbody>
+        </tr>
+      </thead>
+    <tbody>
 
           <% @posts.each do |post| %>
           <tr>

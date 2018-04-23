@@ -2,17 +2,16 @@ class PostsController < ApplicationController
 before_action :set_post, only:  [:show, :edit, :update, :destroy]
 
   def index
-
     @posts = Post.page(params[:page]).per(10).order(created_at: :desc)
-
+    @categories = Category.all
   end
 
   def new
     @post = Post.new
+
   end
 
   def create
-
     @post = current_user.posts.build(post_params)
        if @post.save
          flash[:notice] = 'post was successfully created'
@@ -24,6 +23,10 @@ before_action :set_post, only:  [:show, :edit, :update, :destroy]
        end
   end
 
+  def show
+    @post = Post.find(params[:id])
+    @comment = Comment.new(comment: params[:comment])
+  end
 
   def edit
      unless @user == current_user
@@ -50,6 +53,30 @@ before_action :set_post, only:  [:show, :edit, :update, :destroy]
     end
   end
 
+  def feeds
+      # @users = User.count
+      # @posts = Post.count
+      # @comments = Comment.count
+      # @users = User.order(comments_count: :desc).limit(10)
+      # @posts = Post.order(comments_count: :desc).limit(10)
+
+  end
+
+  def like
+      @post = Post.find(params[:id])
+      @post.likes.create!(user: current_user)
+      likes_count
+      redirect_back(fallback_location: root_path)
+  end
+
+  def unlike
+      @post = Post.find(params[:id])
+      like = Like.where(restaurant: @post, user: current_user)
+      like.destroy_all
+      likes_count
+      redirect_back(fallback_location: root_path)
+  end
+
 private
 
   def set_post
@@ -58,7 +85,7 @@ private
 
 
   def post_params
-    params.require(:post).permit(:content)
+    params.require(:post).permit(:content, :title, :image, :category_id)
   end
 
 end
