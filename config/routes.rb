@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   devise_for :users, :controllers => { registrations: "users/registrations" }
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  
+
 
 
 
@@ -45,7 +45,11 @@ Rails.application.routes.draw do
      namespace :admin do
 
        resources :categories, only: [:index, :create, :show, :edit, :update, :destroy]
-       resources :users, only: [:index]
+       resources :users, only: [:index] do
+         collection do
+           put :toggle_admin
+         end
+      end
        resources :posts, only: [:index, :destroy]
        root "categories#index"
      end

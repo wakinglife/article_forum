@@ -27,9 +27,11 @@
              <th>Email</th>
              <th>Introduction</th>
              <th>Role</th>
+             <th>Change Role</th>
            </tr>
          </thead>
          <tbody>
+         <%= form_tag(toggle_admin_admin_users_path, method: :put) do %>
            <% @users.each do |user| %>
            <tr>
              <th scope="row"><%= user.id %></th>
@@ -37,13 +39,20 @@
              <td><%= user.email %></td>
              <td><%= user.intro %></td>
              <td><%= user.role %></td>
+             <td><% unless user.id == current_user.id %>
+                 <%= check_box_tag "user_ids[]", user.id %>
+               <% end %>
+               <%#= render_user_role(user) %>
+
              </td>
            </tr>
+
            <% end %>
          </tbody>
        </table>
 
+      <%= submit_tag "變更使用者權限" %></td>
       <%= paginate @users %>
-
+    <% end %>
     </div>
   </div>
