@@ -3,13 +3,13 @@ class PostsController < ApplicationController
 
   def index
     # @users = User.order(created_at: :desc).limit(10)
-
-    # @posts = Post.new
     @posts = Post.page(params[:page]).per(10).order(created_at: :desc)
 
   end
 
-
+  def new
+    @post = Post.new
+  end
 
   def create
     @posts = Post.new
