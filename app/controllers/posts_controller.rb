@@ -1,8 +1,8 @@
 class PostsController < ApplicationController
-
+before_action :set_post, only:  [:show, :edit, :update, :destroy]
 
   def index
-    # @users = User.order(created_at: :desc).limit(10)
+
     @posts = Post.page(params[:page]).per(10).order(created_at: :desc)
 
   end
@@ -12,7 +12,7 @@ class PostsController < ApplicationController
   end
 
   def create
-    @posts = Post.new
+
     @post = current_user.posts.build(post_params)
        if @post.save
          flash[:notice] = 'post was successfully created'
@@ -41,11 +41,19 @@ class PostsController < ApplicationController
     end
   end
 
+  def destroy
+    @post = Post.find(params[:post_id])
+
+    if current_user.admin?
+      @post.destroy
+      redirect_to posts_path
+    end
+  end
 
   private
 
 def set_post
-   @post = Post.find(params[:id])
+  @post = Post.find(params[:id])
 end
 
 
