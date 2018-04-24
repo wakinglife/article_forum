@@ -7,10 +7,10 @@ class User < ApplicationRecord
   mount_uploader :avatar, AvatarUploader
 
   validates_presence_of :name, :email
-  
-  has_many :posts, dependent: :restrict_with_error
 
-  has_many :comments, dependent: :restrict_with_error
+  has_many :posts, dependent: :destroy
+
+  has_many :comments, dependent: :destroy
 
 
   has_many :likes, dependent: :destroy

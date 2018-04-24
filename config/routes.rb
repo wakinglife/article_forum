@@ -9,21 +9,21 @@ Rails.application.routes.draw do
      root "posts#index"
 
      resources :posts do
-       resources :comments, only: [:index, :create, :edit, :update, :destroy]
+       resources :comments, only: [:create, :edit, :update, :destroy]
        member do
          post :like
          post :unlike
        end
         collection do
           get :feeds
-          get :ranking
+
        end
      end
 
 
-      resources :users, only: [:index, :show, :edit, :update, :destroy] do
+      resources :users, only: [:show, :new, :create, :edit, :update, :destroy] do
         member do
-          get :friend_list
+          get :profile
         end
       end
 
@@ -36,15 +36,14 @@ Rails.application.routes.draw do
 
 
       resources :categories, only: :show
-      resources :views, only: [:index, :show]
+
 
 
      namespace :admin do
-
        resources :categories
        resources :users, only: [:index] do
-         collection do
-           put :toggle_admin
+         member do
+          post :update
          end
       end
        resources :posts, only: [:index, :destroy]
