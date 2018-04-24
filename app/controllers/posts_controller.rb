@@ -46,7 +46,7 @@ before_action :set_post, only:  [:show, :edit, :update, :destroy]
   end
 
   def destroy
-    @post = Post.find(params[:post_id])
+    # @post = Post.find(params[:post_id])
 
     if current_user.admin?
       @post.destroy
