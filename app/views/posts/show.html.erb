@@ -12,7 +12,8 @@
    <P><%= @post.user.name%></P>
    <%= image_tag @post.user.avatar, class: "img-responsive center-block" %>
 
-
+    <%= render partial: "shared/collect", locals: {post: @post} %>
+    <%= link_to "Comment", "#comments" ,class: "btn btn-sm btn-primary" %>
     </div>
 
     <div class="clearfix"></div>
