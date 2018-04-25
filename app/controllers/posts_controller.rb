@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-before_action :set_post, only:  [:show, :edit, :update, :destroy]
+before_action :set_post, only:  [:show, :edit, :update, :destroy, :collect, :uncollect]
 
   def index
     @posts = Post.page(params[:page]).per(10).order(created_at: :desc)
@@ -26,7 +26,7 @@ before_action :set_post, only:  [:show, :edit, :update, :destroy]
   def show
     @post = Post.find(params[:id])
     @comment = Comment.new(comment: params[:comment])
-    # @comment = Comment.page(params[:page]).per(20).order(created_at: :desc)
+    @comments = @post.comments.page(params[:page]).per(20)
   end
 
   def edit
@@ -46,8 +46,6 @@ before_action :set_post, only:  [:show, :edit, :update, :destroy]
   end
 
   def destroy
-    # @post = Post.find(params[:post_id])
-
     if current_user.admin?
       @post.destroy
       redirect_to posts_path
@@ -55,27 +53,29 @@ before_action :set_post, only:  [:show, :edit, :update, :destroy]
   end
 
   def feeds
-      @users = User.size
-      @posts = Post.size
-      @comments = Comment.size
+      @users = User.count
+      @posts = Post.count
+      @comments = Comment.count
       @users = User.order(comments_count: :desc).limit(10)
       @posts = Post.order(comments_count: :desc).limit(10)
 
   end
 
-  def like
-      @post = Post.find(params[:id])
-      @post.likes.create!(user: current_user)
-      likes_count
+  def collect
+      @post.collects.create!(user: current_user)
       redirect_back(fallback_location: root_path)
+      # respond_to do |format|
+      # format.js
+    # end
   end
 
-  def unlike
-      @post = Post.find(params[:id])
-      like = Like.where(restaurant: @post, user: current_user)
-      like.destroy_all
-      likes_count
+  def uncollect
+      collect = Collect.find_by(user: current_user)
+      collect.destroy
       redirect_back(fallback_location: root_path)
+      # respond_to do |format|
+      # format.js
+    # end
   end
 
 private
