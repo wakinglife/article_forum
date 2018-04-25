@@ -21,7 +21,7 @@
               <span class="icon-bar"></span>
             </button>
             <%= link_to "Dojo Forum", root_path, class: "navbar-brand" %>
-            <%= link_to "Feeds", feeds_posts_path, class: "navbar-button" %>
+            <%= link_to "Feeds", feeds_path, class: "navbar-button" %>
             <%= link_to "All Post", root_path, class: "navbar-button" %>
             <%= link_to "New Post", new_post_path, class: "navbar-button" %>
           </div>
@@ -37,7 +37,7 @@
                   <%= image_tag current_user.avatar, size: "50" if current_user.avatar? %>
                 <% end %>
               </li>
-              <li><%= link_to('Edit Profile', edit_user_path(current_user)) %></li>
+              <li><%= link_to('Profile', user_path(current_user)) %></li>
               <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
 
             <% else %>

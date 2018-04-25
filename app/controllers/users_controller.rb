@@ -1,16 +1,10 @@
 class UsersController < ApplicationController
 
-  before_action :set_user, only: [:show, :edit, :update, :friend_list]
-
-
+  before_action :set_user, only: [:show, :edit, :update, :comments, :collects, :friends]
 
 
     def show
-      @posts = @user.posts.uniq
-      # @commented_posts = @user.posts.uniq
-      #
-      # @liked_posts = @user.posts.uniq
-      # @friends = @user.friends.uniq
+      @posts = @user.posts
 
     end
 
@@ -24,30 +18,31 @@ class UsersController < ApplicationController
 
     def update
 
-       if @user.update_attributes(user_params)
+       if @user.update(user_params)
          redirect_to user_path(@user)
        else
          render :action => :edit
        end
     end
 
-
-    def friend_list
-
-      @friends = @user.all_friends.uniq
+    def comments
+      @comments = @user.comments.includes(:post)
     end
 
+     def collects
+       @collections = @user.collect_posts.includes(:collect_users)
+     end
 
 
-    private
+private
 
-       def set_user
-        @user = User.find(params[:id])
-       end
+     def set_user
+      @user = User.find(params[:id])
+     end
 
-       def user_params
-         params.require(:user).permit(:name, :intro, :avatar)
-       end
+     def user_params
+       params.require(:user).permit(:name, :intro, :avatar)
+     end
 
 
 end
