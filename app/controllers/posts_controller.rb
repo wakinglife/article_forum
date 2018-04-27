@@ -8,7 +8,6 @@ before_action :set_post, only:  [:show, :edit, :update, :destroy, :collect, :unc
 
   def new
     @post = Post.new
-
   end
 
   def create
@@ -30,9 +29,9 @@ before_action :set_post, only:  [:show, :edit, :update, :destroy, :collect, :unc
   end
 
   def edit
-     unless @user == current_user
-       redirect_to posts_user_path(@user)
-     end
+   unless @user == current_user
+     redirect_to posts_user_path(@user)
+   end
   end
 
   def update
@@ -50,15 +49,6 @@ before_action :set_post, only:  [:show, :edit, :update, :destroy, :collect, :unc
       @post.destroy
       redirect_to posts_path
     end
-  end
-
-  def feeds
-      @users = User.count
-      @posts = Post.count
-      @comments = Comment.count
-      @users = User.order(comments_count: :desc).limit(10)
-      @posts = Post.order(comments_count: :desc).limit(10)
-
   end
 
   def collect
