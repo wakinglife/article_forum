@@ -2,39 +2,39 @@
 <div class="container">
   <div class="row">
     <ul class="nav nav-pills nav-pills-center">
-      <li role="presentation" class="active"><%= link_to "All Category", root_path %></li>
+      <% if @category %>
+        <%= link_to "All", posts_path, class: "nav-link" %>
+      <% else %>
+        <%= link_to "All", posts_path, class: "nav-link active" %>
+      <% end %>
       <% @categories.each do |category| %>
-        <li role="presentation"><%= link_to category.name, category_path(category) %></li>
+        <% if @category && category.id == @category.id %>
+          <%= link_to category.name, posts_path(category_id: category.id), class: "nav-link active" %>
+        <% else %>
+          <%= link_to category.name, posts_path(category_id: category.id), class: "nav-link" %>
+        <% end %>
       <% end %>
     </ul>
-
-    <table class="table table-bordered">
+    <table class="table table-hover text-center">
       <thead>
         <tr>
           <th>Comments count ▽</th>
           <th>Post title</th>
           <th>Last commented at ▽</th>
           <th>Viewed count ▽</th>
-
-
         </tr>
       </thead>
-    <tbody>
-
+       <tbody>
           <% @posts.each do |post| %>
           <tr>
             <th scope="row"><%= post.comments.count %></th>
             <td><%=  link_to post.title, post_path(post)%> | <%= link_to "Delete", post_path(post), method: :delete %> <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_path(post),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-default" %></td>
             <td><%#= post.comments.last.created_at %></td>
             <td><%#= post.views.count %></td>
-
           </tr>
           <% end %>
         </tbody>
       </table>
-
-
      <%= paginate @posts %>
-
    </div>
  </div>
