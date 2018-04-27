@@ -1,7 +1,5 @@
 <div class="container">
    <div class="row">
-
-
      <ul class="nav nav-tabs nav-fill">
        <li class="nav-item">
          <%= link_to_unless_current "Category List", admin_categories_path, class: "nav-link" do %>
@@ -13,18 +11,14 @@
            <%= link_to "User List", admin_users_path, class: "nav-link active bg-light" %>
          <% end %>
        </li>
-
      </ul>
-
    </div>
  </div>
-
  <br>
  <div class="container">
    <div class="row">
-
-     <table class="table table-bordered">
-         <thead>
+     <table class="table table-hover">
+        <thead class="thead-light">
            <tr>
              <th>ID</th>
              <th>User Name</th>
@@ -34,32 +28,28 @@
              <th>Change Role</th>
            </tr>
          </thead>
-         <tbody>
-
-           <% @users.each do |user| %>
-           <tr>
-             <th scope="row"><%= user.id %></th>
-             <td><%= link_to user.name, user_path(user) %></td>
-             <td><%= user.email %></td>
-             <td><%= user.intro %></td>
-             <td><%= user.role %></td>
-             <td>
-            <%= form_tag(admin_user_path(user.id), :method => 'post') do  %>
-              <div class="input-group">
-                <%= select_tag('role', options_for_select([['Admin', 'admin'], ['Normal User', 'normal']], user.role == 'admin' ? "admin" : "normal") )%>
-                <%= submit_tag "Update" %>
-              </div>
-            <% end %>
-          </td>
-           </tr>
-
-           <% end %>
+        <tbody>
+          <% @users.each do |user| %>
+            <tr>
+              <th scope="row"><%= user.id %></th>
+              <td><%= link_to user.name, user_path(user) %></td>
+              <td><%= user.email %></td>
+              <td><%= user.intro %></td>
+              <td><%= user.role %></td>
+              <td>
+               <%= form_tag(admin_user_path(user.id), :method => 'post') do  %>
+                  <div class="input-group">
+                    <%= select_tag('role', options_for_select([['Admin', 'admin'], ['Normal User', 'normal']], user.role == 'admin' ? "admin" : "normal") )%>
+                    <%= submit_tag "Update" %>
+                  </div>
+               <% end %>
+             </td>
+            </tr>
+          <% end %>
          </tbody>
-       </table>
-
+        </table>
        <div class="m-auto">
        <%= paginate @users %>
        </div>
-
     </div>
   </div>
