@@ -1,6 +1,5 @@
 <div class="container">
   <div class="row">
-
     <ul class="nav nav-tabs nav-fill">
       <li class="nav-item">
         <%= link_to_unless_current "Category List", admin_categories_path, class: "nav-link" do %>
@@ -12,7 +11,6 @@
           <%= link_to "User List", admin_users_path, class: "nav-link active bg-light" %>
         <% end %>
       </li>
-
     </ul>
   </div>
 </div>
@@ -20,29 +18,23 @@
 <br>
 <div class="container">
   <div class="row">
-
   <div><h1>分類總表</h1></div>
-
   <br>
-
   <div class="form-inline" >
   <%= form_for [:admin, @category] do |f| %>
     <div class="form-group">
       <%= f.text_field :name, placeholder: "Category Name",  class: "form-control" %>
+      <br>
+      <%= f.submit class: "btn btn-info" %>
     </div>
-    <br>
-    <%= f.submit class: "btn btn-info" %>
-
-    <% if @category.errors.any? %>
-      <%= @category.errors.full_messages.to_sentence %>
-    <% end %>
+      <% if @category.errors.any? %>
+        <%= @category.errors.full_messages.to_sentence %>
+      <% end %>
   <% end %>
   </div>
   <br>
 
-
     <div class="col-md-12">
-
       <table class="table table-bordered">
         <thead>
           <tr>
@@ -57,16 +49,15 @@
           <tr>
             <th scope="row"><%= category.id %></th>
             <td><%= category.name %></td>
-            <td><%= link_to '<span class="glyphicon glyphicon-edit"</span>'.html_safe, admin_categories_path(id: category.id), class: "btn btn-default" %></td>
-            <td><%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, admin_category_path(category),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-default" %></td>
+            <td><%= link_to 'Edit', admin_categories_path(id: category.id), class: "btn btn-info" %></td>
+            <td><%= link_to 'Delete', admin_category_path(category),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-info" %></td>
           </tr>
           <% end %>
         </tbody>
       </table>
       <div class="m-auto">
       <%= paginate @categories %>
-    </div>
-     <%#= paginate @categories %>
+     </div>
     </div>
    </div>
   </div>
