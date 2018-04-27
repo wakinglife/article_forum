@@ -2,12 +2,16 @@
    <div class="row">
 
 
-     <ul class="nav nav-tabs">
-        <li role="presentation">
-         <%= link_to 'Category List', admin_categories_path %>
+     <ul class="nav nav-tabs nav-fill">
+       <li class="nav-item">
+         <%= link_to_unless_current "Category List", admin_categories_path, class: "nav-link" do %>
+           <%= link_to "Category List", admin_categories_path, class: "nav-link active bg-light" %>
+         <% end %>
        </li>
-        <li role="presentation" class="active">
-         <%= link_to 'User List', admin_users_path %>
+       <li class="nav-item">
+         <%= link_to_unless_current "User List", admin_users_path, class: "nav-link" do %>
+           <%= link_to "User List", admin_users_path, class: "nav-link active bg-light" %>
+         <% end %>
        </li>
 
      </ul>
@@ -53,8 +57,9 @@
          </tbody>
        </table>
 
-
-      <%= paginate @users %>
+       <div class="m-auto">
+       <%= paginate @users %>
+       </div>
 
     </div>
   </div>
