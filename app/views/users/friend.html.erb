@@ -1,0 +1,36 @@
+<div class="container border bg-light">
+  <h5 class="text-center">
+    Waiting for friends response
+  </h5>
+  <div class="row" id="wait-friend">
+    <% @unconfirm_friends.each do |user| %>
+      <div class="col-sm-2" id="user-<%= user.id %>">
+        <%= render partial: "shared/user_item", locals: { user: user } %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="container border bg-dark">
+  <h5 class="text-center text-white">
+    My Friend request
+  </h5>
+  <div class="row" id="unaccept-friend">
+    <% @request_friends.each do |user| %>
+      <div class="col-sm-2" id="user-<%= user.id %>">
+        <%= render partial: "shared/friend_profile", locals: { user: user } %>
+      </div>
+    <% end %>
+  </div>
+</div>
+<div class="container border bg-light">
+  <h5 class="text-center">
+    Friend list
+  </h5>
+  <div class="row" id="friend">
+    <% @friends.each do |user| %>
+      <div class="col-sm-2" id="user-<%= user.id %>">
+        <%= render partial: "sharedfriend_profile", locals: { user: user } %>
+      </div>
+    <% end %>
+  </div>
+</div>

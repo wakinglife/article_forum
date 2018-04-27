@@ -30,7 +30,9 @@ class User < ApplicationRecord
   end
 
   def all_friends
-    (friends + inverse_friends).uniq
+    # (friends + inverse_friends).uniq
+    friends = self.friends + self.inverse_friends
+    return friends.uniq
   end
 
 

@@ -26,13 +26,15 @@ class UsersController < ApplicationController
     end
 
     def collects
-      @collections = @user.collect_posts.includes(:collect_users)
+      @collected_posts = @user.collected_posts.includes(:collect_users)
     end
 
-    def friend_list
-      @friends = @user.all_friends.uniq
-    end
 
+    def friends
+      @friends = @user.all_friends
+      @unconfirm_friends = @user.unconfirm_friends
+      @request_friends = @user.request_friends
+    end
 
 private
 
