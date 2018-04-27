@@ -1,0 +1,26 @@
+  <div class="container bg-light">
+    <div class="row pt-3">
+      <div class="col-sm-12">
+          <div class="row">
+          <div class="col-sm-3 mt-3">
+            <%= link_to user_path(user), class: "nav-link" do %>
+              <%= image_tag user.avatar, width: "100%" if user.avatar? %>
+              <p class="text-center"><strong><%= user.name %></strong></p>
+            <% end %>
+          </div>
+          <div class="col-sm-9">
+            <p><%= user.intro %></p>
+            <% if user == current_user %>
+              <div class="d-flex flex-row-reverse">
+                <%= link_to "Edit", edit_user_path(user), class: "btn btn-info" %>
+              </div>
+            <% else %>
+              <div class="d-flex flex-row-reverse" id="user-<%= user.id %>">
+                <%= render partial: "shared/friend_button", locals: { user: user } %>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

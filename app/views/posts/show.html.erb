@@ -12,7 +12,7 @@
    <P><%= @post.user.name%></P>
    <%= image_tag @post.user.avatar, class: "img-responsive center-block" %>
 
-    <%= render partial: "shared/collect", locals: {post: @post} %>
+    <%= render partial: "shared/collect_button", locals: {post: @post} %>
     <%= link_to "Comment", "#comments" ,class: "btn btn-sm btn-primary" %>
     </div>
 
@@ -38,7 +38,7 @@
 <% @post.comments.each do |comment| %>
     <div>
       <h4><%= comment.user.name %></h4>
-      <p><%= simple_format comment.content %></p>
+      <p><%= simple_format comment.comment %></p>
       <p class="text-muted">
         <em><%= time_ago_in_words(comment.created_at) %> </em>
 

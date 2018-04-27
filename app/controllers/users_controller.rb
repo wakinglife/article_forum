@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     end
 
     def collects
-      @collected_posts = @user.collected_posts.includes(:collect_users)
+      @collected_posts = @user.collected_posts.includes(:collected_users)
     end
 
 
