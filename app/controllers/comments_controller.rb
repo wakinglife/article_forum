@@ -1,5 +1,6 @@
 class CommentsController < ApplicationController
-  before_action :set_comment, only:  [:show, :edit, :update, :destroy]
+  before_action :set_comment, only:  [:edit, :update, :destroy]
+
 
   def create
        @post = Post.find(params[:post_id])
@@ -25,15 +26,12 @@ class CommentsController < ApplicationController
         @comment.update(comment_params)
         flash[:notice] = "comment was updated"
         redirect_to post_path(@comment.post_id)
-
     end
 
     def destroy
         @post = Post.find(params[:post_id])
-        @comment = Comment.find(params[:id])
         @comment.destroy
         redirect_back(fallback_location: post_path(@post))
-
       end
 
 private

@@ -1,11 +1,11 @@
 <% if user !=  current_user %>
   <% unless current_user.friend?(user) %>
     <% if current_user.request_friend?(user) %>
-      <%= link_to "Accept friend request", accept_friendship_path(user), class: "btn btn-primary", method: :post %><br>
-      <%= link_to "Ignore friend request", ignore_friendship_path(user), class: "btn btn-danger", method: :delete %>
+      <%= link_to "Accept friend request", accept_friendship_path(user), class: "btn btn-primary", method: :post, remote: true %><br>
+      <%= link_to "Ignore friend request", ignore_friendship_path(user), class: "btn btn-danger", method: :delete, remote: true %>
     <% elsif current_user.unconfirm_friend?(user) %>
     <% else %>
-      <%= link_to "Send friend request", friendships_path(friend_id: user), class: "btn btn-primary", method: :post %>
+      <%= link_to "Send friend request", friendships_path(friend_id: user), class: "btn btn-primary", method: :post, remote: true %>
     <% end %>
   <% end %>
 <% end %>

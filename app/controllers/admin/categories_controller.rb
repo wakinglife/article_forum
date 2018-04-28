@@ -34,11 +34,11 @@ class Admin::CategoriesController < Admin::BaseController
 
   def destroy
     if @category.classed_posts.count == 0
-          @category.destroy
-          flash[:alert] = "category was successfully deleted"
-        else
-          flash[:alert] = "category can't be deleted！！"
-        end
+      @category.destroy
+      flash[:alert] = "category was successfully deleted"
+    else
+      flash[:alert] = "category can't be deleted！！"
+    end
     redirect_to admin_categories_path
   end
 

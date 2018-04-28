@@ -23,19 +23,17 @@ before_action :set_post, only:  [:show, :edit, :update, :destroy, :collect, :unc
   end
 
   def show
-    @post = Post.find(params[:id])
     @comment = Comment.new(comment: params[:comment])
     @comments = @post.comments.page(params[:page]).per(20)
   end
 
   def edit
-   unless @user == current_user
-     redirect_to posts_user_path(@user)
-   end
+    unless @user == current_user
+      redirect_to post_path(@post)
+    end
   end
 
   def update
-
     if @post.update(post_params)
       flash[:notice] = "post was updated"
       redirect_to posts_user_path(@user)
@@ -52,20 +50,20 @@ before_action :set_post, only:  [:show, :edit, :update, :destroy, :collect, :unc
   end
 
   def collect
-      @post.collects.create!(user: current_user)
-      redirect_back(fallback_location: root_path)
-      # respond_to do |format|
-      # format.js
-    # end
+    @post.collects.create!(user: current_user)
+    redirect_back(fallback_location: root_path)
+    respond_to do |format|
+    format.js
+    end
   end
 
   def uncollect
-      collect = Collect.find_by(user: current_user)
-      collect.destroy
-      redirect_back(fallback_location: root_path)
-      # respond_to do |format|
-      # format.js
-    # end
+    collect = Collect.find_by(user: current_user)
+    collect.destroy
+    redirect_back(fallback_location: root_path)
+    respond_to do |format|
+    format.js
+    end
   end
 
 private

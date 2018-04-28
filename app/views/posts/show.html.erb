@@ -1,52 +1,117 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <h2><%= @post.title %></h2>
-      <p><%= @post.content %></p>
-      <%= image_tag @post.image, class: "img-responsive center-block" %>
-
+  <div class="row border-bottom bg-light pt-5">
+    <div class="col-sm-3">
+      <h3>
+        <strong><%= @post.title %></strong>
+      </h3>
     </div>
-
-    <div class="col-md-4">
-
-   <P><%= @post.user.name%></P>
-   <%= image_tag @post.user.avatar, class: "img-responsive center-block" %>
-
-    <%= render partial: "shared/collect_button", locals: {post: @post} %>
-    <%= link_to "Comment", "#comments" ,class: "btn btn-sm btn-primary" %>
+    <div class="col-sm-3 offset-sm-6">
+      <%= render partial: "shared/collect_button", locals: { post: @post } %>
+      <%= link_to "Comment", "#comments" ,class: "btn btn-sm btn-primary" %>
     </div>
-
-    <div class="clearfix"></div>
-
-    <hr>
-
   </div>
-
-<div class="container">
   <div class="row">
-   <%= form_for [@post, @comment] do |f| %>
-    <div class="form-group">
-      <%= f.text_area :comment, placeholder: "請留下評論", class: "form-control" %>
-    </div>
-    <div class="form-group">
-      <%= f.submit class: "btn btn-primary" %>
-      <%= f.button "Cancel", type: :reset, class: "btn btn-default" %>
-    </div>
-  <% end %>
-  </div>
-</div>
-<% @post.comments.each do |comment| %>
+   <%#= render partial: "shared/post_item", locals: { type: "Post", post: @post } %>
+   <div class="col-sm-3 border">
+     <%= render partial: "shared/friend_profile", locals: { user: @post.user } %>
+   </div>
+   <div class="col-sm-9 border">
+     <div class="image mt-3">
+       <%= image_tag @post.image, width: "500px" if @post.image? %>
+     </div>
+
+     <div class="content-item w-100">
+       <p><%= @post.content %></p>
+       <div class="row">
+         <div class="col-sm-2 offset-sm-10">
+
+            <% if @post.user == current_user || current_user.admin? %>
+            <div class="buttons">
+
+                <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_post_path(@post), class: "btn btn-default" %>
+                <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_path(@post),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-default" %>
+            </div>
+
+           <% end %>
+         </div>
+       </div>
+     </div>
+
+   </div>
+ </div>
+
+ <div class="row bg-light">
+     <% @post.comments.each do |comment| %>
+       <%#= render partial: "shared/post_item", locals: { type: "Comment", post: @post, comment: comment } %>
+       <div class="col-sm-3 border">
+
+         <%#= render partial: "shared/friend_profile", locals: { user: comment.user } %>
+         <div class="user-item text-center mt-3 mb-3">
+           <%= link_to comments_user_path(comment.user), class: "nav-link" do %>
+             <div class="avatar">
+               <%= image_tag comment.user.avatar, width: "100%" if comment.user.avatar? %>
+             </div>
+             <p><strong><%= comment.user.name %></strong></p>
+           <% end %>
+
+           <div class="links" id="user-<%= comment.user.id %>">
+             <%= render partial: "shared/friend_button", locals: { user: comment.user } %>
+           </div>
+         </div>
+       </div>
+       <div class="col-sm-9 border d-flex align-items-center">
+
+         <div class="content-item w-100">
+           <p><%= @comment.comment %></p>
+           <div class="row">
+             <div class="col-sm-2 offset-sm-10">
+
+                 <% if @comment.user == current_user || current_user.admin? %>
+                 <div class="buttons">
+
+                   <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_post_comment_path(@post, comment_id: comment.id), class: "btn btn-default" %>
+                   <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_comment_path(@post, comment_id: comment.id),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-default" %>
+                 </div>
+               <% end %>
+             </div>
+           </div>
+         </div>
+
+       </div>
+     <% end %>
+     <div class="mx-auto mt-3">
+       <%= paginate @comments %>
+     </div>
+   </div>
+
+   <div class="row" id="comments">
+     <div class="col-sm-12 border">
+       <%= form_for [@post, @comment] do |f| %>
+         <div class="form-group">
+           <%= f.text_area :comment, placeholder: "Please leave comment！", class: "form-control mt-4 bg-light" %>
+         </div>
+         <div class="form-group">
+           <%= f.submit class: "btn btn-primary btn-xs" %>
+           <%= f.button "Cancel", type: :reset, class: "btn btn-danger btn-xs" %>
+         </div>
+       <% end %>
+     </div>
+   </div>
+ </div>
+
+
+<!-- <%# @post.comments.each do |comment| %>
     <div>
-      <h4><%= comment.user.name %></h4>
-      <p><%= simple_format comment.comment %></p>
+      <h4><%#= comment.user.name %></h4>
+      <p><%#= simple_format comment.comment %></p>
       <p class="text-muted">
-        <em><%= time_ago_in_words(comment.created_at) %> </em>
+        <em><%#= time_ago_in_words(comment.created_at) %> </em>
 
       </p>
 
-        <%= link_to '<span class="glyphicon glyphicon-edit"</span>'.html_safe, edit_post_comment_path(@post, comment), class: "btn btn-info" %>
-        <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_comment_path(@post, comment),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-info" %>
+        <%#= link_to '<span class="glyphicon glyphicon-edit"</span>'.html_safe, edit_post_comment_path(@post, comment), class: "btn btn-info" %>
+        <%#= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_comment_path(@post, comment),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-info" %>
     </div>
     <hr>
-    <% end %>
-</div>
+    <%# end %>
+</div> -->

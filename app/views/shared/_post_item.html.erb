@@ -1,0 +1,51 @@
+<% if type == "Post" %>
+  <div class="col-sm-3 border">
+    <%= render partial: "shared/friend_profile", locals: { user: post.user } %>
+  </div>
+  <div class="col-sm-9 border">
+    <div class="image mt-3">
+      <%= image_tag post.image, width: "500px" if post.image? %>
+    </div>
+
+    <div class="content-item w-100">
+      <p><%= @post.content %></p>
+      <div class="row">
+        <div class="col-sm-2 offset-sm-10">
+          
+           <% if post.user == current_user || current_user.admin? %>
+           <div class="buttons">
+
+               <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_post_path(post), class: "btn btn-default" %>
+               <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_path(post),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-default" %>
+           </div>
+
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+<% else %>
+  <div class="col-sm-3 border">
+    <%= render partial: "shared/friend_profile", locals: { user: comment.user } %>
+  </div>
+  <div class="col-sm-9 border d-flex align-items-center">
+
+    <div class="content-item w-100">
+      <p><%= @comment.comment %></p>
+      <div class="row">
+        <div class="col-sm-2 offset-sm-10">
+
+            <% if comment.user == current_user || current_user.admin? %>
+            <div class="buttons">
+
+              <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_post_comment_path(post, comment_id: comment.id), class: "btn btn-default" %>
+              <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_comment_path(post,comment),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-default" %>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+<% end %>
