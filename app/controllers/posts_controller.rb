@@ -2,8 +2,24 @@ class PostsController < ApplicationController
 before_action :set_post, only:  [:show, :edit, :update, :destroy, :collect, :uncollect]
 
   def index
-    @posts = Post.page(params[:page]).per(10).order(created_at: :desc)
+
     @categories = Category.all
+    if current_user
+      if params[:category_id]
+        @category = Category.find(params[:category_id])
+        @ransack = @category.posts.ransack(params[:q])
+      else
+        @ransack = Post.ransack(params[:q])
+      end
+    else
+      if params[:category_id]
+        @category = Category.find(params[:category_id])
+        @ransack = @category.ransack(params[:q])
+      else
+        @ransack = Post.ransack(params[:q])
+      end
+    end
+      @posts = @ransack.result(distinct: true).includes(:comments).page(params[:page]).per(20)
   end
 
   def new
