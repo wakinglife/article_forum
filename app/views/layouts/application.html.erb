@@ -25,7 +25,7 @@
               <%= link_to "New Post", new_post_path, class: "nav-link" %>
             </li>
           </ul>
-          <ul class="navbar-nav ml-auto">
+          <ul class="pull-right text-right navbar-nav">
             <% if current_user %>
               <% if current_user.admin? %>
                 <li class="nav-item">
@@ -78,8 +78,6 @@
                  </div>
                </div>
             <% end %>
-          <div class="container">
          <%= yield %>
-      </div>
   </body>
 </html>

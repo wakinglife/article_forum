@@ -1,49 +1,40 @@
 <div class="container">
-   <div class="row">
+  <div class="row">
+    <div class="col-sm-12 mt-4">
+      <%= form_for @post do |f| %>
+        <div class="form-group">
+          <%= f.label :title, "Title" %>
+          <%= f.text_field :title, placeholder: "Title", class: "form-control bg-light" %>
+        </div>
+        <div class="form-group">
+          <%= f.label :content, "Post" %>
+          <%= f.text_area :content, class: "form-control bg-light" %>
+        </div>
+        <div class="form-group">
+          <%= f.file_field :image %>
+        </div>
+        <div class="form-group">
+          <div class="form-check form-check-inline">
+            Who Can See
 
-     <% if @post.errors.any? %>
-       <h4>We have some errors here !</h4>
-       <ul>
-         <% @post.errors.full_messages.each do |msg| %>
-           <li><%= msg %></li>
-         <% end %>
-       </ul>
-       <hr>
+
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-check form-check-inline">
+            Category
+          </div>
+
+
+        </div>
+        <div class="form-group">
+          Status:
+        </div>
+        <div class="form-group">
+          <%= f.submit "Save Draft" , class: "btn btn-info" %>
+          <%= f.submit "Submit" , class: "btn btn-info" %>
+        </div>
       <% end %>
-
-
-     <%= form_for @post do |f| %>
-
-     <div class="form-group">
-       <%= f.label :category, "Category" %>
-       <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: true}, {class: "form-control"} %>
-     </div>
-
-
-       <div class="form-group">
-         <%= f.label :title, "Title" %>
-         <%= f.text_field :title, class: "form-control" %>
-       </div>
-
-
-       <div class="form-group">
-         <%= f.label :content, "Content" %>
-         <%= f.text_area :content, class: "form-control" %>
-       </div>
-
-
-       <div class="form-group">
-         <%= f.label :image, "Photo" %>
-         <%= image_tag @post.image, width: '300px' if @post.image? %>
-         <%= f.file_field :image %>
-       </div>
-
-       <div class="form-group">
-         <%= f.submit class: "btn btn-info" %>
-
-       </div>
-     <% end %>
-
-
-   </div>
- </div>
+    </div>
+  </div>
+</div>
