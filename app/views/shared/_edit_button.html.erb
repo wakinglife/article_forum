@@ -1,0 +1,15 @@
+<% if type == "Post" %>
+  <% if post.user == current_user || current_user.admin? %>
+    <div class="buttons">
+      <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_post_path(post), class: "btn btn-default" %>
+      <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_path(post), method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-default" %>
+    </div>
+  <% end %>
+<% else %>
+  <% if comment.user == current_user || current_user.admin? %>
+    <div class="buttons">
+      <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_post_comment_path(post, comment), class: "btn btn-default" %>
+      <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_comment_path(post, comment), method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-default" %>
+    </div>
+  <% end %>
+<% end %>
