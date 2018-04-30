@@ -6,7 +6,7 @@
       <tbody>
         <% @drafts.each do |post| %>
           <tr>
-            <td><%= post.title %></td>
+            <td><%= link_to post.title, post_path(post) %></td>
             <td>Draft</td>
             <td><%= post.updated_at.strftime("%Y-%m-%d") %></td>
             <td>
