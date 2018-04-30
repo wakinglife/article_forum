@@ -1,0 +1,12 @@
+<div class="content-item w-100">
+  <p><%= content %></p>
+  <div class="row">
+    <div class="col-sm-2 offset-sm-10">
+      <% if type == "Post" %>
+        <%= render partial: "shared/edit_button", locals: { type: type, post: post} %>
+      <% else %>
+        <%= render partial: "shared/edit_button", locals: { type: type, post: post, comment: comment} %>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -6,7 +6,7 @@
       <tbody>
         <% @posts.each do |post| %>
           <tr>
-            <td data-link="<%= post_path(post) %>"><%= post.title %></td>
+            <td data-link="<%= post_path(post) %>"><%= link_to post.title, post_path(post) %></td>
             <td data-link="<%= post_path(post) %>">Published</td>
             <td data-link="<%= post_path(post) %>"><%= post.updated_at.strftime("%Y-%m-%d") %></td>
             <td>
@@ -14,7 +14,7 @@
             </td>
           </tr>
         <% end %>
-      
+
       </tbody>
     </table>
     <% if @user == current_user %>

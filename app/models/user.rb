@@ -10,6 +10,7 @@ class User < ApplicationRecord
 
   has_many :posts, dependent: :destroy
 
+
   has_many :comments, dependent: :destroy
   has_many :commented_posts, through: :comments, source: :post
 
@@ -30,7 +31,7 @@ class User < ApplicationRecord
   end
 
   def all_friends
-    # (friends + inverse_friends).uniq
+
     friends = self.friends + self.inverse_friends
     return friends.uniq
   end

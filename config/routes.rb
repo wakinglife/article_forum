@@ -19,10 +19,11 @@ Rails.application.routes.draw do
           get :comments
           get :collects
           get :friends
+          get :drafts
         end
       end
 
-      resources :friendships, only: [:create, :destroy] do
+      resources :friendships, only: [:create] do
         member do
           post   :accept
           delete :ignore

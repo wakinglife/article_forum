@@ -1,24 +1,23 @@
 class UsersController < ApplicationController
 
-  before_action :set_user, only: [:show, :edit, :update, :comments, :collects, :friends]
-
+  before_action :set_user, only: [:show, :edit, :update, :comments, :collects, :friends, :check_user, :drafts]
+  before_action :check_user, except: [:show, :comments]
 
     def show
-      @posts = @user.posts
+      
+      @posts = @user.posts.readable_posts(current_user).open_public
     end
 
     def edit
-       # unless @user == current_user
-       #   redirect_to user_path(@user)
-       # end
+
     end
 
     def update
-       if @user.update(user_params)
-         redirect_to user_path(@user)
-       else
-         render :action => :edit
-       end
+     if @user.update(user_params)
+       redirect_to user_path(@user)
+     else
+       render :action => :edit
+     end
     end
 
     def comments
@@ -29,6 +28,9 @@ class UsersController < ApplicationController
       @collected_posts = @user.collected_posts.includes(:collected_users)
     end
 
+    def drafts
+      @drafts = @user.posts.where(public: false)
+    end
 
     def friends
       @friends = @user.all_friends
@@ -44,6 +46,13 @@ private
 
      def user_params
        params.require(:user).permit(:name, :intro, :avatar)
+     end
+
+     def check_user
+       unless @user == current_user
+         flash[:alert] = "You have no authority！"
+         redirect_to user_path(@user)
+       end
      end
 
 
