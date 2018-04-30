@@ -1,6 +1,7 @@
 class PostsController < ApplicationController
-before_action :set_post, only:  [:show, :edit, :update, :destroy, :collect, :uncollect, :check_author]
+before_action :set_post, only: [:show, :edit, :update, :destroy, :collect, :uncollect, :check_author]
 before_action :check_author, only: [:edit, :update, :destroy]
+impressionist :actions => [:show, :index]
 
   def index
     @categories = Category.all
@@ -20,7 +21,7 @@ before_action :check_author, only: [:edit, :update, :destroy]
       end
     end
       @posts = @ransack.result(distinct: true).includes(:comments).page(params[:page]).per(20)
-   end
+  end
 
   def new
     @post = Post.new
@@ -49,7 +50,7 @@ before_action :check_author, only: [:edit, :update, :destroy]
 
   def show
     if @post.check_authority_for?(current_user)
-
+      impressionist(@post)
       @comments = @post.comments.includes(:user).page(params[:page]).per(20)
       @comment = Comment.new
     else
@@ -59,7 +60,7 @@ before_action :check_author, only: [:edit, :update, :destroy]
   end
 
   def edit
-   
+
   end
 
   def update

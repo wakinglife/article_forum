@@ -21,7 +21,8 @@
           <th><%= sort_link(@ransack, :comments_count, "Comments count", default_order: :desc) %></th>
           <th class="text-left">Title</th>
           <th><%= sort_link(@ransack, :last_commented_at, "Last commented at", default_order: :desc) %></th>
-          <th><%= sort_link(@ransack, :viewed_count, "Viewed count", default_order: :desc) %></th>
+          <th ><%= sort_link(@ransack, :viewed_count, "Viewed count", default_order: :desc) %></th>
+
         </tr>
       </thead>
        <tbody>
@@ -29,8 +30,8 @@
           <tr>
             <th scope="row"><%= post.comments.count %></th>
             <td class="text-left"><%=  link_to post.title, post_path(post)%>  <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_path(post),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-default" %></td>
-            <td></td>
-            <td><%= fa_icon "eye" %></td>
+            <td><%= post.last_commented_at.strftime("%Y-%m-%d") if post.last_commented_at.present? %></td>
+            <td class="text-left"><%= fa_icon "eye", text: post.impressionist_count  %></td>
           </tr>
           <% end %>
         </tbody>

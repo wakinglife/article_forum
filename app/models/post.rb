@@ -6,7 +6,7 @@ class Post < ApplicationRecord
   belongs_to :category
 
 
-  has_many :post_categories, dependent: :restrict_with_error  
+  has_many :post_categories, dependent: :restrict_with_error
   has_many :categories, through: :post_categories
 
   has_many :comments, dependent: :destroy
@@ -28,5 +28,6 @@ class Post < ApplicationRecord
      self.collected_users.include?(user)
     end
 
+    is_impressionable
 
 end
