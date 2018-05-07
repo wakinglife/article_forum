@@ -14,7 +14,7 @@ Rails.application.routes.draw do
      end
 
 
-      resources :users, only: [:show, :new, :create, :edit, :update, :destroy] do
+      resources :users, except: [:index] do
         member do
           get :comments
           get :collects
@@ -43,6 +43,14 @@ Rails.application.routes.draw do
          end
        end
        root "categories#index"
+     end
+
+     namespace :api, defaults: {format: :json} do
+       namespace :v1 do
+         post "/login"  =>  "auth#login"
+         post "/logout"  =>  "auth#logout"
+         resources :posts, except: [:edit]
+       end
      end
 
 end

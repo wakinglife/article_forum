@@ -8,8 +8,9 @@ class User < ApplicationRecord
 
   validates_presence_of :name, :email
 
-  has_many :posts, dependent: :destroy
+  before_create :generate_authentication_token
 
+  has_many :posts, dependent: :destroy
 
   has_many :comments, dependent: :destroy
   has_many :commented_posts, through: :comments, source: :post
@@ -47,6 +48,10 @@ class User < ApplicationRecord
 
   def request_friend?(user)
     self.request_friends.include?(user)
+  end
+
+  def generate_authentication_token
+    self.authentication_token = Devise.friendly_token
   end
 
 end
