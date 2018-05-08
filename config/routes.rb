@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
 
-  devise_for :users, :controllers => { registrations: "users/registrations" }
+  devise_for :user
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-     root "posts#index"
+  root "posts#index"
 
      resources :posts do
        resources :comments, only: [:create, :edit, :update, :destroy]
