@@ -15,7 +15,8 @@ class Api::V1::PostsController < ApiController
         {
           title: post.title,
           content: post.content,
-          author: post.user.name
+          author: post.user.name,
+          image: post.image
          }
       end
     }
@@ -24,16 +25,35 @@ class Api::V1::PostsController < ApiController
   def show
     impressionist(@post)
       if !@post
-        render json: {
-          message: "Can't find the post!",
-          status: 400
-        }
+      render json: {
+        message: "Can't find the post!",
+        status: 400
+      }
       else
-        render json: {
-          title: @post.title,
-          content: @post.content,
-          author: @post.user.name
-        }
+        if @post.authority?(current_user)
+          @comments = @post.comments
+            render json: {
+              post:
+                {
+                  title: @post.title,
+                  content: @post.content,
+                  author: @post.user.name,
+                  authority: @post.authority,
+                  status: @post.status,
+                  image: @post.image
+                },
+              comments_data: @comments.map do |comment|
+                {
+                  content: comment.content
+                }
+              end
+            }
+        else
+          render json: {
+            errors: "Not Allowed!",
+            status: 403
+          }
+        end
       end
   end
 
