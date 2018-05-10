@@ -1,7 +1,7 @@
 class Api::V1::PostsController < ApiController
   before_action :authenticate_user!, except: :index
-  before_action :check_author, only: [:update, :destroy]
-  before_action :set_post, only: [:show, :update, :destroy]
+  before_action :check_author, only: [:edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy]
   impressionist :actions=>[:show]
 
   def index
@@ -15,10 +15,7 @@ class Api::V1::PostsController < ApiController
         {
           title: post.title,
           content: post.content,
-          author: post.user.name,
-          date: post.created_at.strftime("%Y/%m/%d %H:%M"),
-          comments_count: comments_count,
-          viewed_count: viewed_count
+          author: post.user.name
          }
       end
     }
@@ -35,14 +32,18 @@ class Api::V1::PostsController < ApiController
         render json: {
           title: @post.title,
           content: @post.content,
-          author: @post.user.name,
-          date: @post.created_at.strftime("%Y/%m/%d %H:%M")
+          author: @post.user.name
         }
       end
   end
 
+  def new
+    @post = Post.new
+  end
+
   def create
     @post = Post.new(post_params)
+    @post.user = current_user
     if @post.save
       render json: {
         message: "Post was created successfully!",
