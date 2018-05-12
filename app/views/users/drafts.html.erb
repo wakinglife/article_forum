@@ -4,15 +4,23 @@
   <div class="row">
     <table class="table table-hover text-center bg-light">
       <tbody>
-        <% @drafts.each do |post| %>
-          <tr>
-            <td><%= link_to post.title, post_path(post) %></td>
-            <td>Draft</td>
-            <td><%= post.updated_at.strftime("%Y-%m-%d") %></td>
-            <td>
-              <%= render partial: "shared/eidt_button", locals: { type: "Post", post: post } %>
-            </td>
-          </tr>
+        <% @user.posts.each do |post| %>
+          <% if !post %>
+            <em>There is no draft.</em>
+          <% elsif post.draft == true %>
+            <% if current_user == post.user %>
+              <tr>
+                <td style = "text-align: start;" > <%= link_to post.title, post_path(post), style: "margin-left: 10px"  %> <%#= render partial: "shared/post_authority", locals: {post: post} %></td>
+                <td>
+                  <%= post.draft ? 'Draft' : 'Published' %>
+                </td>
+                <td><%= post.updated_at.strftime("%Y-%m-%d") %></td>
+                <td>
+                  <%= render partial: "shared/edit_button", locals: { type: "Post", post: post } %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
         <% end %>
       </tbody>
     </table>

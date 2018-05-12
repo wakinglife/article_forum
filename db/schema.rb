@@ -10,12 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180507090759) do
+ActiveRecord::Schema.define(version: 20180511044512) do
 
   create_table "categories", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "name"
+  end
+
+  create_table "categories_posts", force: :cascade do |t|
+    t.integer "post_id"
+    t.integer "category_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "collects", force: :cascade do |t|
@@ -67,13 +74,6 @@ ActiveRecord::Schema.define(version: 20180507090759) do
     t.index ["user_id"], name: "index_impressions_on_user_id"
   end
 
-  create_table "post_categories", force: :cascade do |t|
-    t.integer "post_id"
-    t.integer "category_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "posts", force: :cascade do |t|
     t.text "content"
     t.text "title"
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(version: 20180507090759) do
     t.string "authority", default: "all", null: false
     t.integer "viewed_count", default: 0
     t.datetime "last_commented_at"
+    t.boolean "draft", default: false
   end
 
   create_table "users", force: :cascade do |t|

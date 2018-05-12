@@ -32,11 +32,9 @@ class User < ApplicationRecord
   end
 
   def all_friends
-
     friends = self.friends + self.inverse_friends
     return friends.uniq
   end
-
 
   def friend?(user)
     self.friends.include?(user) || self.inverse_friends.include?(user)

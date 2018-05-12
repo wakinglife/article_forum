@@ -2,19 +2,48 @@
 <%= render partial: "shared/navtab_user", locals: { user: @user } %>
 <div class="container">
   <div class="row">
-    <table class="table table-hover text-center bg-light">
+    <table class="table table-hover table-borderless bg-light">
       <tbody>
         <% @posts.each do |post| %>
           <tr>
-            <td data-link="<%= post_path(post) %>"><%= link_to post.title, post_path(post) %></td>
-            <td data-link="<%= post_path(post) %>">Published</td>
-            <td data-link="<%= post_path(post) %>"><%= post.updated_at.strftime("%Y-%m-%d") %></td>
+            <% if post.draft == false %>
+              <% if current_user != @user && current_user.role != 'admin' %>
+                <% if post.authority == 'friend' && !current_user.friend?(user) %>
+                <% elsif post.authority == 'myself' %>
+                <% else %>
+                  <tr>
+                    <td style="text-align: start;"><%= link_to post.title, post_path(post), style: "margin-left: 10px" %> <%#= render partial: "shared/post_authority", locals: {post: post} %></td>
+                    <td>
+                      <%= post.draft ? 'Draft' : 'Published' %>
+                    </td>
+                    <td><%= post.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+                  </tr>
+                <% end%>
+              <% elsif current_user.role == 'admin' && current_user != @user %>
+                <% if post.authority == 'myself' %>
+                <% else %>
+                  <tr>
+                    <td style="text-align: start;"><%= link_to post.title, post_path(post), style: "margin-left: 10px" %> <%#= render partial: "shared/post_authority", locals: {post: post} %></td>
+                    <td>
+                      <%= post.draft ? 'Draft' : 'Published' %>
+                    </td>
+                    <td><%= post.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+                  </tr>
+                <% end%>
+              <% else %>
+                <tr>
+                  <td style="text-align: start;"><%= link_to post.title, post_path(post), style: "margin-left: 10px" %> <%#= render partial: "shared/post_authority", locals: {post: post} %></td>
+                  <td>
+                    <%= post.draft ? 'Draft' : 'Published' %>
+                  </td>
+                  <td><%= post.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+              <% end %>
+            <% end %>
             <td>
               <%= render partial: "shared/edit_button", locals: { type: "Post", post: post } %>
             </td>
           </tr>
         <% end %>
-
       </tbody>
     </table>
     <% if @user == current_user %>

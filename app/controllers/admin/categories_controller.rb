@@ -17,6 +17,7 @@ class Admin::CategoriesController < Admin::BaseController
       flash[:notice] = "category was successfully created"
       redirect_to admin_categories_path
     else
+      flash[:alert] = "Category was fail to creat. #{@category.errors.full_messages.to_sentence}"
       @categories = Category.page(params[:page]).per(15)
       render :index
     end
@@ -27,19 +28,26 @@ class Admin::CategoriesController < Admin::BaseController
       redirect_to admin_categories_path
       flash[:notice] = "category was successfully updated"
     else
+      flash[:alert] = "Category was fail to creat. #{@category.errors.full_messages.to_sentence}"
       @categories = Category.page(params[:page]).per(15)
       render :index
     end
   end
 
   def destroy
-    # if @category.classed_posts.count == 0
+      if @category.posts.present?
+        flash[:alert] = "Category was associated with posts and can't be deleted"
+        redirect_to admin_categories_path
+        return
+      end
       @category.destroy
-      flash[:alert] = "category was successfully deleted"
-    # else
-    #   flash[:alert] = "category can't be deleted！！"
-    # end
-    #  redirect_to admin_categories_path
+
+      if @category.present?
+        flash[:notice] = "Category was successfully deleted."
+      else
+        flash[:alert] = "Category does not exist."
+      end
+      redirect_to admin_categories_path
   end
 
 private

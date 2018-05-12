@@ -1,7 +1,6 @@
 class CommentsController < ApplicationController
-  before_action :set_post, only: [:create, :edit, :update, :destroy, :check_authority, :check_comment_author]
+  before_action :set_post, only: [:create, :edit, :update, :destroy, :check_comment_author]
   before_action :set_comment, only: [:edit, :update, :destroy, :check_comment_author]
-  before_action :check_authority, only: [:create, :edit, :update, :destroy]
   before_action :check_comment_author, only: [:edit, :update, :destroy]
 
 
@@ -9,10 +8,10 @@ class CommentsController < ApplicationController
        @comment = @post.comments.build(comment_params)
        @comment.user = current_user
       if @comment.save
-        flash[:notice]= "Message saved"
+        flash[:notice] = "Comment was created."
         redirect_back(fallback_location: post_path(@post))
       else
-        flash.now[:alert]= @comment.errors.full_messages.each{|msg| msg.class}
+        flash.now[:alert] = @comment.errors.full_messages.each{|msg| msg.class}
         redirect_back(fallback_location: post_path(@post, comment_params))
       end
     end
@@ -23,8 +22,8 @@ class CommentsController < ApplicationController
 
     def update
       @comment.update(comment_params)
-      flash[:notice] = "comment was updated"
-      redirect_to post_path(@comment.post_id)
+      flash[:notice] = "comment was updated."
+      redirect_back(fallback_location: post_path(@comment.post_id))
     end
 
     def destroy
@@ -47,17 +46,12 @@ private
     end
 
     def check_comment_author
-    unless @comment.user == current_user || current_user.admin?
-      flash[:alert] = "You can only edit and delete your comments！"
-      redirect_to post_path(@post)
-    end
-    end
-
-    def check_authority
-      unless @post.check_authority_for?(current_user)
-        flash[:alert] = "You have no authority"
-        redirect_to posts_path
+      unless @comment.user == current_user || current_user.admin?
+        flash[:alert] = "You can only edit and delete your comments！"
+        redirect_to post_path(@post)
       end
     end
+
+
 
 end

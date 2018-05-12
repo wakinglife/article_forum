@@ -6,9 +6,26 @@
       <div class="col-sm-12 border-top border-buttom bg-light">
         <div class="row align-items-center">
           <div class="col-sm-8 offset-sm-2" data-link="<%= post_path(comment.post) %>">
-            <h4 class="m-3"><%= link_to comment.post.title, post_path(post)%></h4>
+            <h4 class="m-3"><%= link_to comment.post.title, post_path(comment.post)%></h4>
             <p class="border p-4 rounded bg-white text-black"><%= comment.content %></p>
           </div>
+          <!-- <div class="comment-edit-form">
+              <%= form_for [comment.post, comment], remote: true do |f| %>
+                <div class="form-group">
+                  <div>
+                    <%= f.text_area :content, maxlength: 140, class: "form-control"%>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-danger btn-sm reply-cancel-btn">Cancel</button>
+                <%= f.submit 'Update', remote: true, class: "btn btn-primary btn-sm" %>
+              <% end %>
+            </div>
+            <div class="edit-delete-group">
+            <button class="btn btn-primary btn-sm reply-edit-btn glyphicon glyphicon-pencil"></button>
+            <%= link_to post_comment_path(comment.post, comment), method: :delete, data: {confirm: "Are you sure to delete this comment?"} do %>
+              <button class="btn btn-danger btn-sm glyphicon glyphicon-trash"></button>
+            <% end %>
+          </div> -->
           <div class="col-sm-2">
             <%= render partial: "shared/edit_button", locals: { type: "Comment", post: comment.post, comment: comment } %>
           </div>

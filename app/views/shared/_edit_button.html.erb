@@ -1,15 +1,28 @@
 <% if type == "Post" %>
-  <% if post.user == current_user || current_user.admin? %>
-    <div class="buttons">
-      <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_post_path(post), class: "btn btn-default" %>
-      <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_path(post), method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-default" %>
-    </div>
-  <% end %>
+  <div class="buttons">
+    <% if post.user == current_user  %>
+        <%= link_to edit_post_path(post) do %>
+          <button class="btn btn-info btn-sm glyphicon glyphicon-pencil"></button>
+        <% end %>
+    <% end %>
+    <% if post.user == current_user || current_user.admin? %>
+      <%= link_to post_path(post), method: :delete, data: {confirm: "Are you sure to delete this post?"} do %>
+        <button class="btn btn-danger btn-sm glyphicon glyphicon-trash"></button>
+      <% end %>
+    <% end %>
+  </div>
+
 <% else %>
-  <% if comment.user == current_user || current_user.admin? %>
-    <div class="buttons">
-      <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_post_comment_path(post, comment), class: "btn btn-default" %>
-      <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_comment_path(post, comment), method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-default" %>
-    </div>
-  <% end %>
+  <div class="buttons">
+    <% if comment.user == current_user  %>
+        <%= link_to edit_post_comment_path(post, comment) do %>
+          <button class="btn btn-info btn-sm glyphicon glyphicon-pencil"></button>
+        <% end %>
+    <% end %>
+    <% if comment.user == current_user || current_user.admin? %>
+        <%= link_to post_comment_path(post, comment), method: :delete, data: {confirm: "Are you sure to delete this post?"} do %>
+          <button class="btn btn-danger btn-sm glyphicon glyphicon-trash"></button>
+        <% end %>
+    <% end %>
+  </div>
 <% end %>

@@ -11,7 +11,7 @@
     </div>
   </div>
   <div class="row">
-   <%#= render partial: "shared/post_item", locals: { type: "Post", post: @post } %>
+
    <div class="col-sm-3 border">
      <%= render partial: "shared/friend_profile", locals: { user: @post.user } %>
    </div>
@@ -22,51 +22,30 @@
 
      <div class="content-item w-100">
        <p><%= @post.content %></p>
-       <div class="row">
-         <div class="col-sm-2 offset-sm-10">
-
-            <% if @post.user == current_user || current_user.admin? %>
-            <div class="buttons">
-
-                <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_post_path(@post), class: "btn btn-default" %>
-                <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_path(@post),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-default" %>
-            </div>
-
-           <% end %>
-         </div>
+       <p> Categories: <% @post.categories.each do |category| %>
+         <%= category.name%>
+         <% end %>
+       </p>
+       <div class="edit-delete-group">
+        <% if @user == current_user %>
+          <%= link_to edit_post_path(@post) do %>
+            <button class="btn btn-primary btn-sm glyphicon glyphicon-pencil"></button>
+          <% end %>
+        <% end %>
+        <% if @user == current_user or current_user.role == 'admin'  %>
+          <%= link_to post_path(@post), method: :delete, data: {confirm: "Are you sure to delete this post?"} do %>
+            <button class="btn btn-danger btn-sm glyphicon glyphicon-trash"></button>
+          <% end %>
+        <% end %>
        </div>
-     </div>
 
+     </div>
    </div>
  </div>
 
  <div class="row bg-light">
      <% @post.comments.each do |comment| %>
        <%= render partial: "shared/post_item", locals: { type: "Comment", post: @post, comment: comment } %>
-       <div class="col-sm-3 border">
-
-         <%= render partial: "shared/friend_profile", locals: { user: comment.user } %>
-
-       </div>
-       <div class="col-sm-9 border d-flex align-items-center">
-
-         <div class="content-item w-100">
-           <p><%= @comment.content %></p>
-           <div class="row">
-             <div class="col-sm-2 offset-sm-10">
-
-                 <% if @comment.user == current_user || current_user.admin? %>
-                 <div class="buttons">
-
-                   <%= link_to '<span class="glyphicon glyphicon-edit"></span>'.html_safe, edit_post_comment_path(@post, comment_id: comment.id), class: "btn btn-default" %>
-                   <%= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_comment_path(@post, comment_id: comment.id),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-default" %>
-                 </div>
-               <% end %>
-             </div>
-           </div>
-         </div>
-
-       </div>
      <% end %>
      <div class="mx-auto mt-3">
        <%= paginate @comments %>
@@ -77,30 +56,13 @@
      <div class="col-sm-12 border">
        <%= form_for [@post, @comment] do |f| %>
          <div class="form-group">
-           <%= f.text_area :content, placeholder: "Please leave comment！", class: "form-control mt-4 bg-light" %>
+           <%= f.text_area :content, placeholder: "Leave your comment here！", class: "form-control mt-4 bg-light" %>
          </div>
          <div class="form-group">
-           <%= f.submit class: "btn btn-primary btn-xs" %>
-           <%= f.button "Cancel", type: :reset, class: "btn btn-danger btn-xs" %>
+           <%= f.submit class: "btn btn-primary btn-sm" %>
+           <%= f.button "Cancel", type: :reset, class: "btn btn-danger btn-sm" %>
          </div>
        <% end %>
      </div>
    </div>
  </div>
-
-
-<!-- <%# @post.comments.each do |comment| %>
-    <div>
-      <h4><%#= comment.user.name %></h4>
-      <p><%#= simple_format comment.comment %></p>
-      <p class="text-muted">
-        <em><%#= time_ago_in_words(comment.created_at) %> </em>
-
-      </p>
-
-        <%#= link_to '<span class="glyphicon glyphicon-edit"</span>'.html_safe, edit_post_comment_path(@post, comment), class: "btn btn-info" %>
-        <%#= link_to '<span class="glyphicon glyphicon-trash"></span>'.html_safe, post_comment_path(@post, comment),method: :delete, data:{ confirm: "Are you sure ?"}, class: "btn btn-info" %>
-    </div>
-    <hr>
-    <%# end %>
-</div> -->
