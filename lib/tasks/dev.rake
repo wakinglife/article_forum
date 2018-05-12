@@ -1,6 +1,6 @@
 namespace :dev do
 
-task fake: [:fake_user, :fake_post, :fake_comment, :fake_collect, :fake_friend]
+task fake: [:fake_user, :fake_post, :fake_comment, :fake_collect, :fake_friendship]
 
   task fake_user: :environment do
     User.where.not(role: "admin").destroy_all
@@ -21,20 +21,21 @@ task fake: [:fake_user, :fake_post, :fake_comment, :fake_collect, :fake_friend]
 
   task fake_post: :environment do
     Post.destroy_all
-     User.all.each do |user|
-       rand(20).times do |i|
-         user.posts.create!(
-           user: User.all.sample,
-           title: FFaker::Lorem.sentence(10),
-           content: FFaker::Lorem.sentence,
-           image: File.open(Rails.root.join("public/post_image/#{rand(1..10)}.jpg")),
-           public: [true, true, true, false].sample,
-           authority: ["myself", "friend", "all"].sample
-         )
-         post.save
-         post.posts_categories.create(category: Category.all.sample)
-       end
-     end
+    200.times do |i|
+      authority_list = ["all", "friend", "myself"]
+      # status = ["pending", "publish"].sample
+      status = ["draft", "post"].sample
+      user = User.all.sample
+      post = Post.create!(
+        title: FFaker::Lorem.sentence,
+        content: FFaker::Lorem.paragraph(30),
+        user: user,
+        image: File.open(Rails.root.join("public/post_image/#{rand(1..10)}.jpg")),
+        authority: authority_list.sample
+      )
+      post.save
+      post.categories_posts.create(category: Category.all.sample)
+    end
     puts "have created fake posts"
     puts "now you have #{Post.count} posts data"
   end
@@ -44,48 +45,51 @@ task fake: [:fake_user, :fake_post, :fake_comment, :fake_collect, :fake_friend]
     Comment.destroy_all
     100.times do
       user = User.all.sample
-      post = Post.readable_posts(user).open_public.sample
-      post.comments.create!(
+      post = Post.all.sample
+      Comment.create!(
         user: user,
+        post: post,
         content: FFaker::Lorem.sentence
       )
+      # if !View.where(user_id: user.id, post_id: post.id).present?
+      #   View.create(
+      #     post: post,
+      #     user: user
+      #   )
+      # end
     end
-
     puts "have created fake comments"
     puts "now you have #{Comment.count} comments data"
+    # puts "now you have #{View.count} views data"
   end
 
 
 
   task fake_collect: :environment do
     Collect.destroy_all
-       rand(100).times do |i|
-         post.collects.create!(
-           user: User.all.sample,
-           post: Post.all.sample
-         )
-       end
-
+       50.times do
+       Collect.create(
+         user: User.all.sample,
+         post: Post.all.sample
+       )
+     end
     puts "have created fake likes"
     puts "now you have #{Collect.count} collects data"
   end
 
 
-    task fake_friend: :environment do
-  
-      60.times do
-        group1 = User.all.sample
-        group2 = User.where.not(id: user1.id).sample
-        unless group1.unconfirm_friend?(group2) || user1.request_friend?(group2)
-          user1.unconfirm_friends.create!(friend: group2)
-          puts "#{group1.name} invite #{group2.name}"
-        end
+    task fake_friendship: :environment do
+      Friendship.destroy_all
+      25.times do |i|
+      status = ["pending", "approved"].sample
+      Friendship.create(
+        user: User.all.sample,
+        friend: User.all.sample,
+        status: status
+        )
       end
-      30.times do
-        friendship = Friendship.where(status: false).sample
-        friendship.update(status: true)
-        puts "#{friendship.user_id} accept friend to #{friendship.friend_id}"
-      end
+      puts "have created fake friends"
+      puts "now you have #{Friendship.count} friends data"
     end
 
 end

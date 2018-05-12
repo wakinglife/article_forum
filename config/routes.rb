@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   root "posts#index"
 
      resources :posts do
-       resources :comments, only: [:create, :edit, :update, :destroy]
+       resources :comments, except: [:show]
        member do
          post :collect
          post :uncollect
@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
       resources :users, except: [:index] do
         member do
+          get :posts
           get :comments
           get :collects
           get :friends
@@ -23,10 +24,11 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :friendships, only: [:create] do
+      resources :friendships, only: [:create, :destroy] do
         member do
           post   :accept
           delete :ignore
+
         end
       end
 
