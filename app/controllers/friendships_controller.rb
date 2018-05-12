@@ -18,7 +18,7 @@ class FriendshipsController < ApplicationController
   def accept
     @friendship = current_user.request_friendships.find_by(user_id: params[:id])
     @friendship.update(status: true)
-    flash[:alert] = "Successfully add new friend!"
+    flash[:notice] = "Successfully add new friend!"
     @user = User.find(params[:id])
     redirect_back(fallback_location: root_path)
     respond_to do |format|
@@ -34,6 +34,21 @@ class FriendshipsController < ApplicationController
     redirect_back(fallback_location: root_path)
     respond_to do |format|
       format.js
+    end
+  end
+
+  def destroy
+    Friendship.where(user_id: params[:user_id], friend_id: current_user.id).destroy_all
+    Friendship.where(user_id: current_user.id, friend_id: params[:user_id]).destroy_all
+      #unfriend from self profile
+    if @friend = User.find(params[:user_id])
+      respond_to do |format|
+      format.js
+      end
+    else
+      #unfriend from other users profile
+      flash[:notice] = "Successfully remove friend!"
+      redirect_back(fallback_location: root_path)
     end
   end
 
