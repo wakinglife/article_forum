@@ -48,8 +48,8 @@ group :development, :test do
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
   gem 'sqlite3'
-  gem 'capistrano-rails'
-  gem 'capistrano-passenger'
+  # gem 'capistrano-rails'
+  # gem 'capistrano-passenger'
 end
 
 group :development do
@@ -65,6 +65,6 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 group :production do
-  gem 'mysql2'
-  # gem 'pg', '~> 0.20'
+  # gem 'mysql2'
+  gem 'pg', '~> 0.20'
 end
