@@ -11,11 +11,18 @@ task fake: [:fake_user, :fake_post, :fake_comment, :fake_collect, :fake_friendsh
         email: "#{name}@example.com",
         password: "12345678",
         intro: FFaker::Lorem::sentence(50),
-        avatar: File.open(Rails.root.join("public/avatar/user#{rand(1..20)}.jpg")),
+        # avatar: File.open(Rails.root.join("public/avatar/user#{rand(1..20)}.jpg")),
       )
+      filelink = ""
+      Dir.glob("#{Rails.root}/public/avatar/user#{rand(1..20)}.jpg").map do |pic|
+        client = FilestackClient.new('A3AY90f9sT2KkKlxKTd84z')
+        filelink = client.upload(filepath: pic)
+      end
+      user.avatar = filelink.url
       user.save!
       puts user.name
     end
+      puts "now you have #{User.count} users data"
   end
 
 
@@ -30,9 +37,15 @@ task fake: [:fake_user, :fake_post, :fake_comment, :fake_collect, :fake_friendsh
         title: FFaker::Lorem.sentence,
         content: FFaker::Lorem.paragraph(30),
         user: user,
-        image: File.open(Rails.root.join("public/post_image/#{rand(1..10)}.jpg")),
+        # image: File.open(Rails.root.join("public/post_image/#{rand(1..10)}.jpg")),
         authority: authority_list.sample
       )
+      filelink = ""
+      Dir.glob("#{Rails.root}/public/post_image/#{rand(1..10)}.jpg").map do |pic|
+        client = FilestackClient.new('A3AY90f9sT2KkKlxKTd84z')
+        filelink = client.upload(filepath: pic)
+      end
+      post.image = filelink.url
       post.save
       post.categories_posts.create(category: Category.all.sample)
     end

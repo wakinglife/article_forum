@@ -34,8 +34,9 @@
 
               <div class="field">
                 <%= f.label :avatar, "Avatar" %>
-                <%= image_tag @user.avatar, width: '300px' if @user.avatar? %>
-                <%= f.file_field :avatar %>
+                <%#= image_tag @user.avatar, width: '300px' if @user.avatar? %>
+                <%#= f.file_field :avatar %>
+                <%= f.filestack_field :avatar, 'Upload Your Avatar!',  pickerOptions: {accept: 'image/*'} %>
               </div>
 
               <div class="actions">

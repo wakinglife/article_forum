@@ -17,7 +17,8 @@
    </div>
    <div class="col-sm-9 border">
      <div class="image mt-3">
-       <%= image_tag @post.image, width: "500px" if @post.image? %>
+       <%#= image_tag @post.image, width: "500px" if @post.image? %>
+       <%= filestack_image @post.image, transform: filestack_transform.resize(width: "500px") %>
      </div>
 
      <div class="content-item w-100">

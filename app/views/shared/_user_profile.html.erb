@@ -4,7 +4,8 @@
           <div class="row">
           <div class="col-sm-3 mt-3">
             <%= link_to user_path(user), class: "nav-link" do %>
-              <%= image_tag user.avatar, width: "100%" if user.avatar? %>
+              <%#= image_tag user.avatar, width: "100%" if user.avatar? %>
+              <%= filestack_image user.avatar, transform: filestack_transform.resize(width: "100%") %>
               <p class="text-center"><strong><%= user.name %></strong></p>
             <% end %>
           </div>

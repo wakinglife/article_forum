@@ -1,5 +1,5 @@
 class Post < ApplicationRecord
-  mount_uploader :image, PhotoUploader
+  # mount_uploader :image, PhotoUploader
   validates_presence_of :content, :title, :authority
   is_impressionable #:counter_cache => true, :column_name => :viewed_count
 

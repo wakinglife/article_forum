@@ -11,7 +11,8 @@
           <%= f.text_area :content, placeholder: "What's on your mind?", class: "form-control bg-light" %>
         </div>
         <div class="form-group">
-          <%= f.file_field :image %>
+          <%#= f.file_field :image %>
+          <%= f.filestack_field :image, 'Upload Your Photo!',  pickerOptions: { accept: 'image/*'} %>
         </div>
         <div class="form-group">
           <label> Who can see </label>

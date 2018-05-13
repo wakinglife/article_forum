@@ -38,6 +38,7 @@ gem 'jquery-rails'
 gem 'font-awesome-rails'
 gem 'ransack'
 gem 'impressionist'
+gem 'filestack-rails'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 

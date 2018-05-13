@@ -1,7 +1,8 @@
 <div class="user-item text-center mt-3 mb-3">
   <%= link_to user_path(user), class: "nav-link" do %>
     <div class="avatar">
-      <%= image_tag user.avatar, width: "100%" if user.avatar? %>
+      <%#= image_tag user.avatar, width: "100%" if user.avatar? %>
+      <%= filestack_image user.avatar, transform: filestack_transform.resize(width: "100%") %>
     </div>
     <p><strong><%= user.name %></strong></p>
   <% end %>
