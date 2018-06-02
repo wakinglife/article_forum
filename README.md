@@ -1,3 +1,4 @@
+![Maintainability](https://api.codeclimate.com/v1/badges/c0609ce113878eab620c/maintainability)
 # Article Forum
 
 # 安裝：
@@ -17,7 +18,6 @@
 -  先新增分類項目
 ```
 - $ rails dev:fake
-
 ```
 # User stories
 ## 使用者認證
