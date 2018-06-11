@@ -4,7 +4,7 @@
 # 安裝：
 
 ```
-- $ https://github.com/wakinglife/article_forum.git
+- $ git clone https://github.com/wakinglife/article_forum.git
 - $ cd article_forum
 - $ bundle install
 - $ rails db:migrate
