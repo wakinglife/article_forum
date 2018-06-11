@@ -4,18 +4,17 @@
 # 安裝：
 
 ```
-- $ git clone git@github.com:wakinglife/article_forum.git
+- $ https://github.com/wakinglife/article_forum.git
 - $ cd article_forum
 - $ bundle install
 - $ rails db:migrate
 ```
 ### Generate seed data and fake data
-#### Seed file generate a admin role
+#### Seed file generate a admin role and category items
 ```
 - $ rails db:seed
 ```
 #### Fake data   
--  先新增分類項目
 ```
 - $ rails dev:fake
 ```
